@@ -6,7 +6,7 @@ public class Game extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		
+		System.out.println("Idemo...");
 	}
 
 	public static void main(String[] args) {
