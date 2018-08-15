@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import mars.javafx.CameraController;
 
 public class Game extends Application {
 
@@ -38,7 +40,8 @@ public class Game extends Application {
 
 		fox = new Box(1,1,1);
 
-		// fox.setTranslateZ(-5);
+
+		fox.setTranslateZ(-2);
 		fox.setMaterial(matFox);
 
 		// Creating a Group object
@@ -63,32 +66,32 @@ public class Game extends Application {
 		camera.setRotate(-30);
 
 		camera.setTranslateY(-20);
-		camera.setTranslateZ(-30);
+		camera.setTranslateZ(-40);
 		// camera.setTranslateX(-20);
 
-		camera.setFieldOfView(45);
+		camera.setFieldOfView(35);
 
 		// Creating a scene object
 		Scene scene = new Scene(root, 900, 400);
 		scene.setCamera(camera);
 		// Setting title to the Stage
-		primaryStage.setTitle("Drawing a Box");
+		primaryStage.setTitle("Fox game");
 
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
-				case LEFT:
+				case A:
 					fox.setTranslateX(fox.getTranslateX()-1);
 					break;
-				case RIGHT:
+				case D:
 					fox.setTranslateX(fox.getTranslateX()+1);
 					break;
-				case UP:
+				case W:
 					fox.setTranslateZ(fox.getTranslateZ()+1);
 					break;
-				case DOWN:
+				case S:
 					fox.setTranslateZ(fox.getTranslateZ()-1);
 					break;
 				case SPACE:
@@ -107,6 +110,7 @@ public class Game extends Application {
 
 		// Displaying the contents of the stage
 		primaryStage.show();
+		new CameraController(scene, camera, new Point3D(0, -20, -40), new Point3D(0, 0, 0));
 
 	}
 
