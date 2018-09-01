@@ -16,21 +16,44 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mars.javafx.CameraController;
 
-public class Game extends Application {
+public class Game extends Application  {
 
 	float i = 0.1f;
-	Box prepreka, fox;
+	Box prepreka, fox, traka;
 
 
 	@Override
 	public void start(Stage primaryStage) {
+		AnimationTimer at = new AnimationTimer() {
+
+			@Override
+			public void handle(long now) {
+//				System.out.println("lisica"+ fox.getLayoutX());
+//				System.out.println("auto" + prepreka.getLayoutX());
+				if(
+						fox.getTranslateY() == prepreka.getTranslateY()  &&
+						fox.getTranslateX() == prepreka.getTranslateX() &&
+						fox.getTranslateZ() == prepreka.getTranslateZ()
+				){
+					System.out.println("===============================");
+				}
+//				System.out.println(fox.getLayoutX());
+//				System.out.println(prepreka.getLayoutX());
+//				traka.setLayoutX(-5);
+
+
+
+
+			}
+		};
 		// Drawing a Box
-		Box traka = new Box(15, 1, 5);
+		traka = new Box(15, 1, 5);
 		traka.setTranslateX(7);
 
 		prepreka = new Box(2, 2, 2);
@@ -52,12 +75,17 @@ public class Game extends Application {
 		// Timeline
 		Timeline time = new Timeline();
 
+
+
 		//kretanje prepreke
 		KeyValue kv = new KeyValue(prepreka.layoutXProperty(), 15);
 		KeyFrame kf = new KeyFrame(Duration.seconds(2), kv);
 		time.getKeyFrames().add(kf);
 		time.setCycleCount(Timeline.INDEFINITE);
 		time.play();
+
+
+
 
 		// Creating camera
 		PerspectiveCamera camera = new PerspectiveCamera(true);
@@ -110,6 +138,7 @@ public class Game extends Application {
 
 		// Displaying the contents of the stage
 		primaryStage.show();
+		at.start();
 		new CameraController(scene, camera, new Point3D(0, -20, -40), new Point3D(0, 0, 0));
 
 	}
