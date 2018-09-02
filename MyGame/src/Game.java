@@ -21,125 +21,158 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mars.javafx.CameraController;
+import models.Fox;
+import view.ViewManager;
 
-public class Game extends Application  {
+public class Game extends Application {
 
-	float i = 0.1f;
-	Box prepreka, fox, traka;
+	// float i = 0.1f;
+	// Box prepreka, fox, traka;
 
+	public ViewManager manager;
 
-	@Override
-	public void start(Stage primaryStage) {
-		AnimationTimer at = new AnimationTimer() {
-
-			@Override
-			public void handle(long now) {
-//				System.out.println("lisica"+ fox.getLayoutX());
-//				System.out.println("auto" + prepreka.getLayoutX());
-				if(
-						fox.getTranslateY() == prepreka.getTranslateY()  &&
-						fox.getTranslateX() == prepreka.getTranslateX() &&
-						fox.getTranslateZ() == prepreka.getTranslateZ()
-				){
-					System.out.println("===============================");
-				}
-//				System.out.println(fox.getLayoutX());
-//				System.out.println(prepreka.getLayoutX());
-//				traka.setLayoutX(-5);
-
-
-
-
-			}
-		};
-		// Drawing a Box
-		traka = new Box(15, 1, 5);
-		traka.setTranslateX(7);
-
-		prepreka = new Box(2, 2, 2);
-		Material mat = new PhongMaterial(Color.RED);
-		Material matFox = new PhongMaterial(Color.YELLOW);
-		prepreka.setMaterial(mat);
-
-		fox = new Box(1,1,1);
-
-
-		fox.setTranslateZ(-2);
-		fox.setMaterial(matFox);
-
-		// Creating a Group object
-		Group root = new Group(traka);
-		root.getChildren().add(prepreka);
-		root.getChildren().add(fox);
-
-		// Timeline
-		Timeline time = new Timeline();
-
-
-
-		//kretanje prepreke
-		KeyValue kv = new KeyValue(prepreka.layoutXProperty(), 15);
-		KeyFrame kf = new KeyFrame(Duration.seconds(2), kv);
-		time.getKeyFrames().add(kf);
-		time.setCycleCount(Timeline.INDEFINITE);
-		time.play();
-
-
-
-
-		// Creating camera
+	public void setCamera(ViewManager manager) {
 		PerspectiveCamera camera = new PerspectiveCamera(true);
+		camera.setTranslateZ(-400);
+		camera.setTranslateY(-200);
+		// camera.setNearClip(0.1);
+		camera.setFarClip(2000.0);
+		camera.setFieldOfView(40);
+		manager.getScene().setCamera(camera);
+		new CameraController(manager.getScene(), camera, new Point3D(0, -10, -20), new Point3D(0, 0, 0));
+	}
 
-		camera.setRotationAxis(Rotate.X_AXIS);
-		camera.setRotate(-30);
+	public Stage initGame(Stage primaryStage) {
+		this.manager = new ViewManager();
+		this.manager.addFox();
+		this.manager.addPath();
+		this.manager.addCar();
+		this.setCamera(manager);
+		primaryStage = manager.getStage();
 
-		camera.setTranslateY(-20);
-		camera.setTranslateZ(-40);
-		// camera.setTranslateX(-20);
-
-		camera.setFieldOfView(35);
-
-		// Creating a scene object
-		Scene scene = new Scene(root, 900, 400);
-		scene.setCamera(camera);
-		// Setting title to the Stage
-		primaryStage.setTitle("Fox game");
-
+		Scene scene = this.manager.getScene();
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case A:
-					fox.setTranslateX(fox.getTranslateX()-1);
+					manager.getFox().setXPosition(manager.getFox().getXPosition() - 3);
 					break;
 				case D:
-					fox.setTranslateX(fox.getTranslateX()+1);
+					manager.getFox().setXPosition(manager.getFox().getXPosition() + 3);
 					break;
 				case W:
-					fox.setTranslateZ(fox.getTranslateZ()+1);
+					manager.getFox().setZPosition(manager.getFox().getZPosition() + 3);
 					break;
 				case S:
-					fox.setTranslateZ(fox.getTranslateZ()-1);
-					break;
-				case SPACE:
-					fox.setTranslateY(fox.getTranslateX()+3);
-					fox.setTranslateY(fox.getTranslateX()-3);
-				default:
+					manager.getFox().setZPosition(manager.getFox().getZPosition() - 3);
 					break;
 				}
 			}
 		});
+		return primaryStage;
+	}
 
-
-
-		// Adding scene to the stage
-		primaryStage.setScene(scene);
-
-		// Displaying the contents of the stage
+	@Override
+	public void start(Stage primaryStage) {
+		primaryStage = this.initGame(primaryStage);
 		primaryStage.show();
-		at.start();
-		new CameraController(scene, camera, new Point3D(0, -20, -40), new Point3D(0, 0, 0));
+
+		// Group g = new Group();
+		// Scene s = new Scene(g,500,500);
+		// Box bb = new Box(500,500,500);
+		// g.getChildren().add(bb);
+		// primaryStage.setScene(s);
+		// primaryStage.show();
+
+		// AnimationTimer at = new AnimationTimer() {
+		//
+		// @Override
+		// public void handle(long now) {
+		//// System.out.println("lisica"+ fox.getLayoutX());
+		//// System.out.println("auto" + prepreka.getLayoutX());
+		// if(
+		// fox.getTranslateY() == prepreka.getTranslateY() &&
+		// fox.getTranslateX() == prepreka.getTranslateX() &&
+		// fox.getTranslateZ() == prepreka.getTranslateZ()
+		// ){
+		// System.out.println("===============================");
+		// }
+		//// System.out.println(fox.getLayoutX());
+		//// System.out.println(prepreka.getLayoutX());
+		//// traka.setLayoutX(-5);
+		// }
+		// };
+		// // Drawing a Box
+		// traka = new Box(15, 1, 5);
+		// traka.setTranslateX(7);
+		//
+		// prepreka = new Box(2, 2, 2);
+		// Material mat = new PhongMaterial(Color.RED);
+		// Material matFox = new PhongMaterial(Color.YELLOW);
+		// prepreka.setMaterial(mat);
+		//
+		// fox = new Box(1,1,1);
+		//
+		//
+		// fox.setTranslateZ(-2);
+		// fox.setMaterial(matFox);
+		//
+		// // Creating a Group object
+		// Group root = new Group(traka);
+		// root.getChildren().add(prepreka);
+		// root.getChildren().add(fox);
+		//
+		// // Timeline
+		// Timeline time = new Timeline();
+		//
+		//
+		//
+		// //kretanje prepreke
+		// KeyValue kv = new KeyValue(prepreka.layoutXProperty(), 15);
+		// KeyFrame kf = new KeyFrame(Duration.seconds(2), kv);
+		// time.getKeyFrames().add(kf);
+		// time.setCycleCount(Timeline.INDEFINITE);
+		// time.play();
+		// // Creating camera
+
+		// // Creating a scene object
+		// Scene scene = new Scene(root, 900, 400);
+		// scene.setCamera(camera);
+		// // Setting title to the Stage
+		// primaryStage.setTitle("Fox game");
+		//
+		// scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		//
+		// @Override
+		// public void handle(KeyEvent event) {
+		// switch (event.getCode()) {
+		// case A:
+		// fox.setTranslateX(fox.getTranslateX()-1);
+		// break;
+		// case D:
+		// fox.setTranslateX(fox.getTranslateX()+1);
+		// break;
+		// case W:
+		// fox.setTranslateZ(fox.getTranslateZ()+1);
+		// break;
+		// case S:
+		// fox.setTranslateZ(fox.getTranslateZ()-1);
+		// break;
+		// case SPACE:
+		// fox.setTranslateY(fox.getTranslateX()+3);
+		// fox.setTranslateY(fox.getTranslateX()-3);
+		// default:
+		// break;
+		// }
+		// }
+		// });
+		// // Adding scene to the stage
+		// primaryStage.setScene(scene);
+		// // Displaying the contents of the stage
+
+		// at.start();
 
 	}
 
