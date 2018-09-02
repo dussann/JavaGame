@@ -53,6 +53,10 @@ public class ViewManager {
 		this.root.getChildren().add(car.getCar());
 	}
 
+	public Car getCar() {
+		return this.car;
+	}
+
 
 
 }

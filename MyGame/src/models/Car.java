@@ -1,5 +1,6 @@
 package models;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -16,5 +17,25 @@ public class Car {
 
 	public Box getCar (){
 		return this.car;
+	}
+
+	public double getXPosition() {
+		return this.car.getTranslateX();
+	}
+
+	public void setXPosition(double position) {
+		this.car.setTranslateX(position);
+	}
+
+	public double getYPosition() {
+		return this.car.getTranslateX();
+	}
+
+	public void setYPosition(double position) {
+		this.car.setTranslateX(position);
+	}
+
+	public DoubleProperty getLayuoutX(){
+		return this.car.layoutXProperty();
 	}
 }

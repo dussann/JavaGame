@@ -1,4 +1,6 @@
 
+import java.sql.Time;
+
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -71,6 +73,26 @@ public class Game extends Application {
 				}
 			}
 		});
+
+		 KeyValue kv = new KeyValue(manager.getCar().getLayuoutX(), 65);
+		 KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+		 Timeline time = new Timeline();
+		 time.getKeyFrames().add(kf);
+		 time.setCycleCount(Timeline.INDEFINITE);
+		 time.play();
+		AnimationTimer timer = new AnimationTimer() {
+
+			@Override
+			public void handle(long now) {
+				if ((manager.getFox().getXPosition() == manager.getCar().getXPosition()) &&
+					(manager.getFox().getYPosition() == manager.getCar().getYPosition())
+				) {
+					System.out.println("fox is killed!!!s");
+				}
+			}
+		};
+		timer.start();
+
 		return primaryStage;
 	}
 
