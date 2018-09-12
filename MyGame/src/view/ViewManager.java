@@ -10,8 +10,8 @@ import models.Road;
 
 public class ViewManager {
 
-	private static final int WIDTH = 900;
-	private static final int HEIGHT = 900;
+	private static final int WIDTH = 500;
+	private static final int HEIGHT = 400;
 	private Stage mainStage;
 	private Scene mainScene;
 	private Group root;

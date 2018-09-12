@@ -35,6 +35,13 @@ public class Car {
 		this.car.setTranslateX(position);
 	}
 
+	public double getZPosition() {
+		return this.car.getTranslateZ();
+	}
+
+	public void setZPosition(double position) {
+		this.car.setTranslateZ(position);
+	}
 	public DoubleProperty getLayuoutX(){
 		return this.car.layoutXProperty();
 	}

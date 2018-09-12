@@ -59,33 +59,37 @@ public class Game extends Application {
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case A:
-					manager.getFox().setXPosition(manager.getFox().getXPosition() - 3);
+					manager.getFox().setXPosition(manager.getFox().getXPosition() - 10);
 					break;
 				case D:
-					manager.getFox().setXPosition(manager.getFox().getXPosition() + 3);
+					manager.getFox().setXPosition(manager.getFox().getXPosition() + 10);
 					break;
 				case W:
-					manager.getFox().setZPosition(manager.getFox().getZPosition() + 3);
+					manager.getFox().setZPosition(manager.getFox().getZPosition() + 10);
 					break;
 				case S:
-					manager.getFox().setZPosition(manager.getFox().getZPosition() - 3);
+					manager.getFox().setZPosition(manager.getFox().getZPosition() - 10);
 					break;
 				}
 			}
 		});
 
-		 KeyValue kv = new KeyValue(manager.getCar().getLayuoutX(), 65);
-		 KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+		 KeyValue kv = new KeyValue(manager.getCar().getLayuoutX(), 190);
+		 KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
+
+
 		 Timeline time = new Timeline();
-		 time.getKeyFrames().add(kf);
+		 time.getKeyFrames().addAll(kf);
 		 time.setCycleCount(Timeline.INDEFINITE);
 		 time.play();
 		AnimationTimer timer = new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
+				System.out.println("fox: x"+manager.getFox().getXPosition() +" z"+ manager.getFox().getZPosition());
+				System.out.println("car: x"+manager.getCar().getXPosition() +" z"+ manager.getCar().getZPosition());
 				if ((manager.getFox().getXPosition() == manager.getCar().getXPosition()) &&
-					(manager.getFox().getYPosition() == manager.getCar().getYPosition())
+					(manager.getFox().getZPosition() == manager.getCar().getZPosition())
 				) {
 					System.out.println("fox is killed!!!s");
 				}
