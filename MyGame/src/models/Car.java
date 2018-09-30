@@ -20,7 +20,7 @@ public class Car {
 	}
 
 	public double getXPosition() {
-		return this.car.getTranslateX();
+		return this.car.getLayoutX();
 	}
 
 	public void setXPosition(double position) {
@@ -28,11 +28,11 @@ public class Car {
 	}
 
 	public double getYPosition() {
-		return this.car.getTranslateX();
+		return this.car.getLayoutY();
 	}
 
 	public void setYPosition(double position) {
-		this.car.setTranslateX(position);
+		this.car.setTranslateY(position);
 	}
 
 	public double getZPosition() {
@@ -42,7 +42,16 @@ public class Car {
 	public void setZPosition(double position) {
 		this.car.setTranslateZ(position);
 	}
+
 	public DoubleProperty getLayuoutX(){
 		return this.car.layoutXProperty();
+	}
+
+	public double getMinDangerArea(){
+		return this.getXPosition() - 10;
+	}
+
+	public double getMaxDangerArea(){
+		return this.getXPosition() + 10;
 	}
 }

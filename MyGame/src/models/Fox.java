@@ -40,4 +40,6 @@ public class Fox {
 		this.fox.setTranslateZ(position);
 	}
 
+
+
 }

@@ -2,6 +2,7 @@ package view;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Box;
 import javafx.stage.Stage;
 import models.Car;
@@ -30,6 +31,10 @@ public class ViewManager {
 		return this.mainStage;
 	}
 
+	public void exitStage() {
+		this.mainStage.close();
+	}
+
 	public Scene getScene(){
 		return this.mainScene;
 	}
@@ -55,6 +60,11 @@ public class ViewManager {
 
 	public Car getCar() {
 		return this.car;
+	}
+
+	public boolean checkCrash(){
+
+		return false;
 	}
 
 
