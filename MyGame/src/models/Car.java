@@ -1,6 +1,7 @@
 package models;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -47,11 +48,23 @@ public class Car {
 		return this.car.layoutXProperty();
 	}
 
-	public double getMinDangerArea(){
-		return this.getXPosition() - 10;
+	/* calculate x-area of car */
+
+	public double getLeftSideArea(){
+		return this.getXPosition() + this.car.getLayoutBounds().getMinX();
 	}
 
-	public double getMaxDangerArea(){
-		return this.getXPosition() + 10;
+	public double getRightSideArea(){
+		return this.getXPosition() + this.car.getLayoutBounds().getMaxX();
+	}
+
+	/* calculate z-area of car */
+
+	public double getFrontSideArea() {
+		return this.getZPosition() + this.car.getLayoutBounds().getMaxZ();
+	}
+
+	public double getBackSideArea() {
+		return this.getZPosition() + this.car.getLayoutBounds().getMinZ();
 	}
 }

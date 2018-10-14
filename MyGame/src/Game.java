@@ -81,14 +81,15 @@ public class Game extends Application {
 		Timeline time = new Timeline();
 		time.getKeyFrames().addAll(kf);
 		time.setCycleCount(Timeline.INDEFINITE);
-		 time.play();
+		//time.play();
 		AnimationTimer timer = new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
-				//gameManager.checkCrash(manager.getFox(), manager.getCar());
-				System.out.println(manager.getFox().getZPosition());
-				gameManager.finishGame(manager.getFox());
+
+				gameManager.checkCrash(manager.getFox(), manager.getCar());
+				// System.out.println(manager.getFox().getZPosition());
+				gameManager.checkFinishGame(manager.getFox());
 
 			}
 		};

@@ -20,9 +20,9 @@ public class ViewManager {
 	private Road road;
 	private Car car;
 
-	public ViewManager(){
+	public ViewManager() {
 		this.root = new Group();
-		this.mainScene = new Scene(this.root,WIDTH,HEIGHT,true);
+		this.mainScene = new Scene(this.root, WIDTH, HEIGHT, true);
 		this.mainStage = new Stage();
 		this.mainStage.setScene(this.mainScene);
 	}
@@ -35,7 +35,7 @@ public class ViewManager {
 		this.mainStage.close();
 	}
 
-	public Scene getScene(){
+	public Scene getScene() {
 		return this.mainScene;
 	}
 
@@ -44,16 +44,16 @@ public class ViewManager {
 		this.root.getChildren().add(road.getRoad());
 	}
 
-	public void addFox(){
+	public void addFox() {
 		this.fox = new Fox();
 		this.root.getChildren().add(fox.getFox());
 	}
 
-	public Fox getFox(){
+	public Fox getFox() {
 		return this.fox;
 	}
 
-	public void addCar(){
+	public void addCar() {
 		this.car = new Car();
 		this.root.getChildren().add(car.getCar());
 	}
@@ -62,11 +62,8 @@ public class ViewManager {
 		return this.car;
 	}
 
-	public boolean checkCrash(){
-
+	public boolean checkCrash() {
 		return false;
 	}
-
-
 
 }

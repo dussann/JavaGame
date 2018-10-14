@@ -1,3 +1,4 @@
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import models.Car;
@@ -7,34 +8,35 @@ import view.ViewManager;
 public class GameManager {
 
 	int i = 0;
+	int y = 0;
 	private ViewManager manager;
+
 	public GameManager(ViewManager manager) {
 		this.manager = manager;
 	}
 
-	public void checkCrash(Fox fox, Car car){
-		double foxX = manager.getFox().getXPosition();
-		double foxZ = manager.getFox().getZPosition();
-		double carX = manager.getCar().getXPosition();
-		double carZ = manager.getCar().getZPosition();
+	public void checkCrash(Fox fox, Car car) {
 
-		double minYArea = -10;
-		double maxYArea = 10;
+		double foxLeftArea = fox.getLeftSideArea();
+		double foxRightArea = fox.getRightSideArea();
+		double foxFrontArea = fox.getFrontSideArea();
+		double foxBackArea = fox.getBackSideArea();
 
-		if((foxX>=manager.getCar().getMinDangerArea()) && (foxX<=manager.getCar().getMaxDangerArea())) {
-			if((foxZ>=minYArea) && (foxZ<=maxYArea)){
-				System.out.println("Gine");
-				i++;
-				if(i>2){
-					this.manager.exitStage();
-				}
+		double carLeftArea = car.getLeftSideArea();
+		double carRightArea = car.getRightSideArea();
+		double carFrontArea = car.getFrontSideArea();
+		double carBackArea = car.getBackSideArea();
 
-			}
-		}
+
+		System.out.println(fox.getXPosition());
+		System.out.println(car.getXPosition());
+
+
+
 	}
 
-	public void finishGame(Fox fox){
-		if(fox.getZPosition()-5 > 30){
+	public void checkFinishGame(Fox fox) {
+		if (fox.getZPosition() - 5 > 30) {
 			System.out.println("presao nivo");
 			this.manager.exitStage();
 		}
