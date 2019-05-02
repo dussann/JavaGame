@@ -1,9 +1,12 @@
 package view;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Box;
+import javafx.scene.shape.Shape3D;
+import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
 import models.Car;
 import models.Fox;
@@ -11,8 +14,8 @@ import models.Road;
 
 public class ViewManager {
 
-	private static final int WIDTH = 500;
-	private static final int HEIGHT = 400;
+	private static final int WIDTH = 800;
+	private static final int HEIGHT = 600;
 	private Stage mainStage;
 	private Scene mainScene;
 	private Group root;
@@ -25,6 +28,10 @@ public class ViewManager {
 		this.mainScene = new Scene(this.root, WIDTH, HEIGHT, true);
 		this.mainStage = new Stage();
 		this.mainStage.setScene(this.mainScene);
+	}
+
+	public  ObservableList<Transform> getTransforms() {
+		return car.getTransforms();
 	}
 
 	public Stage getStage() {
@@ -60,6 +67,10 @@ public class ViewManager {
 
 	public Car getCar() {
 		return this.car;
+	}
+
+	public void addElement(Shape3D element){
+		this.root.getChildren().add(element);
 	}
 
 	public boolean checkCrash() {

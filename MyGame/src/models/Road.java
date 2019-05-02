@@ -8,7 +8,7 @@ public class Road {
 	private Box road;
 
 	public Road() {
-		this.road = new Box(200, 10, 70);
+		this.road = new Box(20, 1, 7);
 		road.setMaterial(new PhongMaterial(Color.BLUE));
 	}
 

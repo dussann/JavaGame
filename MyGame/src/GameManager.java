@@ -28,7 +28,7 @@ public class GameManager {
 		double carBackArea = car.getBackSideArea();
 
 
-		System.out.println(fox.getXPosition());
+//		System.out.println(fox.getXPosition());
 		System.out.println(car.getXPosition());
 
 

@@ -1,19 +1,28 @@
 package models;
 
+import java.util.Observable;
+
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
+import javafx.scene.transform.Transform;
 
 public class Car {
 	private Box car;
 
 	public Car(){
-		this.car = new Box(20, 20, 20);
-		this.car.setTranslateY(-20);
-		this.car.setTranslateX(-100);
+		this.car = new Box(2, 2, 2);
+		this.car.setTranslateY(-2);
+		this.car.setTranslateX(-10);
 		car.setMaterial(new PhongMaterial(Color.RED));
+	}
+
+
+	public ObservableList<Transform> getTransforms() {
+		return this.car.getTransforms();
 	}
 
 	public Box getCar (){
@@ -21,7 +30,8 @@ public class Car {
 	}
 
 	public double getXPosition() {
-		return this.car.getLayoutX();
+//		return this.car.getLayoutX();
+		return this.car.getTranslateX();
 	}
 
 	public void setXPosition(double position) {

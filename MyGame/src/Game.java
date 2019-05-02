@@ -20,10 +20,10 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Path;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import mars.javafx.CameraController;
-import models.Fox;
 import view.ViewManager;
 
 public class Game extends Application {
@@ -33,15 +33,51 @@ public class Game extends Application {
 
 	public ViewManager manager;
 	public GameManager gameManager;
+	double timeStart = Double.NaN;
+	Point3D[] startAndPoints = new Point3D[] { new Point3D(20, 0, 0), new Point3D(0, 0, 0) };
+
+	AnimationTimer timer = new AnimationTimer() {
+
+		@Override
+		public void handle(long now) {
+
+			double timeNow = now/1e9;
+
+			if (Double.isNaN(timeStart)) {   // Ako smo prvi put ovde, postavljamo početno vreme.
+				timeStart = timeNow;
+			}
+
+			double time = timeNow - timeStart;     // Vreme proteklo od starta programa.
+			double tCycle = time % 3;              // Vreme proteklo od početka ciklusa (svaki deo ciklusa traje 1s).
+			int i = (int) tCycle;                  // Faza ciklusa u kome smo trenutno.
+			double t = tCycle % 1;                 // Gde smo unutar trenutne faze, vrednost iz [0, 1).
+			Point3D s = startAndPoints[1];                    // PoÄ�etna taÄ�ka trenutne faze.
+			Point3D d = startAndPoints[0]; // Krajnja taÄ�ka trenutne faze.
+
+			Point3D p = s.multiply(1 - t).add(d.multiply(t));
+
+			manager.getCar().getTransforms().setAll(new Translate(p.getX(), p.getY(), p.getZ()));
+
+			//System.out.println(manager.getFox().getZPosition());
+
+			double razlika =manager.getFox().getXPosition() - p.getX();
+			double razlika2 = manager.getFox().getZPosition() - p.getZ();
+			System.out.println("razlika"+razlika);
+			double zbirPolusirina = 1.05d;
+			if(razlika < zbirPolusirina){
+				if(razlika2 < zbirPolusirina){
+					System.out.println("*************");
+				}
+			}
+
+		}
+	};
+
 
 	public void setCamera(ViewManager manager) {
 		PerspectiveCamera camera = new PerspectiveCamera(true);
-		camera.setTranslateZ(-200);
-		camera.setTranslateY(-100);
-		camera.setFarClip(2000);
-		camera.setFieldOfView(40);
 		manager.getScene().setCamera(camera);
-		new CameraController(manager.getScene(), camera, new Point3D(0, -10, -20), new Point3D(0, 0, 0));
+		new CameraController(manager.getScene(), camera, new Point3D(20, -15, -10), new Point3D(-10, 10, 10));
 	}
 
 	public Stage initGame(Stage primaryStage) {
@@ -53,6 +89,9 @@ public class Game extends Application {
 		this.setCamera(manager);
 		primaryStage = manager.getStage();
 
+
+
+
 		Scene scene = this.manager.getScene();
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -60,47 +99,30 @@ public class Game extends Application {
 			public void handle(KeyEvent event) {
 				switch (event.getCode()) {
 				case A:
-					manager.getFox().setXPosition(manager.getFox().getXPosition() - 10);
+					manager.getFox().setXPosition(manager.getFox().getXPosition() - 1);
 					break;
 				case D:
-					manager.getFox().setXPosition(manager.getFox().getXPosition() + 10);
+					manager.getFox().setXPosition(manager.getFox().getXPosition() + 1);
 					break;
 				case W:
-					manager.getFox().setZPosition(manager.getFox().getZPosition() + 10);
+					manager.getFox().setZPosition(manager.getFox().getZPosition() + 1);
 					break;
 				case S:
-					manager.getFox().setZPosition(manager.getFox().getZPosition() - 10);
+					manager.getFox().setZPosition(manager.getFox().getZPosition() - 1);
 					break;
 				}
 			}
 		});
-
-		KeyValue kv = new KeyValue(manager.getCar().getLayuoutX(), 190);
-		KeyFrame kf = new KeyFrame(Duration.seconds(3), kv);
-
-		Timeline time = new Timeline();
-		time.getKeyFrames().addAll(kf);
-		time.setCycleCount(Timeline.INDEFINITE);
-		//time.play();
-		AnimationTimer timer = new AnimationTimer() {
-
-			@Override
-			public void handle(long now) {
-
-				gameManager.checkCrash(manager.getFox(), manager.getCar());
-				// System.out.println(manager.getFox().getZPosition());
-				gameManager.checkFinishGame(manager.getFox());
-
-			}
-		};
-		timer.start();
-
 		return primaryStage;
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage = this.initGame(primaryStage);
+
+		Group root = new Group();
+		Scene s = new Scene(root, 400, 400);
+		timer.start();
 		primaryStage.show();
 	}
 

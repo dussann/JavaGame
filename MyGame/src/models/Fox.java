@@ -10,8 +10,8 @@ public class Fox {
 	private Box fox;
 
 	public Fox() {
-		this.fox = new Box(10, 10, 10);
-		this.fox.setTranslateY(-20);
+		this.fox = new Box(1, 1, 1);
+		this.fox.setTranslateY(-2);
 		fox.setMaterial(new PhongMaterial(Color.ORANGE));
 	}
 
