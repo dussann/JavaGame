@@ -5,6 +5,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -34,7 +35,7 @@ public class Game extends Application {
 	public ViewManager manager;
 	public GameManager gameManager;
 	double timeStart = Double.NaN;
-	Point3D[] startAndPoints = new Point3D[] { new Point3D(20, 0, 0), new Point3D(0, 0, 0) };
+	Point3D[] startAndPoints = new Point3D[] { new Point3D(-5, 0, 0), new Point3D(5, 0, 0) };
 
 	AnimationTimer timer = new AnimationTimer() {
 
@@ -51,25 +52,24 @@ public class Game extends Application {
 			double tCycle = time % 3;              // Vreme proteklo od početka ciklusa (svaki deo ciklusa traje 1s).
 			int i = (int) tCycle;                  // Faza ciklusa u kome smo trenutno.
 			double t = tCycle % 1;                 // Gde smo unutar trenutne faze, vrednost iz [0, 1).
-			Point3D s = startAndPoints[1];                    // PoÄ�etna taÄ�ka trenutne faze.
-			Point3D d = startAndPoints[0]; // Krajnja taÄ�ka trenutne faze.
+			Point3D s = startAndPoints[0];                    // PoÄ�etna taÄ�ka trenutne faze.
+			Point3D d = startAndPoints[1]; // Krajnja taÄ�ka trenutne faze.
 
 			Point3D p = s.multiply(1 - t).add(d.multiply(t));
 
 			manager.getCar().getTransforms().setAll(new Translate(p.getX(), p.getY(), p.getZ()));
 
-			//System.out.println(manager.getFox().getZPosition());
+			double xDiff = Math.abs(manager.getFox().getXPosition()  - p.getX());
+			double yDiff = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
 
-			double razlika =manager.getFox().getXPosition() - p.getX();
-			double razlika2 = manager.getFox().getZPosition() - p.getZ();
-			System.out.println("razlika"+razlika);
 			double zbirPolusirina = 1.05d;
-			if(razlika < zbirPolusirina){
-				if(razlika2 < zbirPolusirina){
-					System.out.println("*************");
-				}
+			System.out.println(manager.getFox().getZPosition());
+			if(gameManager.collision(xDiff, yDiff)){
+				System.out.println("live");
+			}else{
+				System.out.println("die");
 			}
-
+			gameManager.checkFinishGame();
 		}
 	};
 

@@ -16,7 +16,7 @@ public class Car {
 	public Car(){
 		this.car = new Box(2, 2, 2);
 		this.car.setTranslateY(-2);
-		this.car.setTranslateX(-10);
+		//this.car.setTranslateX(-10);
 		car.setMaterial(new PhongMaterial(Color.RED));
 	}
 
@@ -30,8 +30,9 @@ public class Car {
 	}
 
 	public double getXPosition() {
-//		return this.car.getLayoutX();
-		return this.car.getTranslateX();
+		// return this.car.getLayoutX();
+		return  car.getTranslateX();
+		//return this.car.getTranslateX();
 	}
 
 	public void setXPosition(double position) {
@@ -39,7 +40,7 @@ public class Car {
 	}
 
 	public double getYPosition() {
-		return this.car.getLayoutY();
+		return this.car.getTranslateY();
 	}
 
 	public void setYPosition(double position) {
