@@ -13,6 +13,7 @@ import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -68,6 +69,7 @@ public class Game extends Application {
 				System.out.println("live");
 			}else{
 				System.out.println("die");
+				manager.getFox().setZPosition(-5);
 			}
 			gameManager.checkFinishGame();
 		}
@@ -88,9 +90,6 @@ public class Game extends Application {
 		this.manager.addCar();
 		this.setCamera(manager);
 		primaryStage = manager.getStage();
-
-
-
 
 		Scene scene = this.manager.getScene();
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -121,7 +120,7 @@ public class Game extends Application {
 		primaryStage = this.initGame(primaryStage);
 
 		Group root = new Group();
-		Scene s = new Scene(root, 400, 400);
+
 		timer.start();
 		primaryStage.show();
 	}

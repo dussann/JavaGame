@@ -12,6 +12,7 @@ public class Fox {
 	public Fox() {
 		this.fox = new Box(1, 1, 1);
 		this.fox.setTranslateY(-2);
+		this.fox.setTranslateZ(-5);
 		fox.setMaterial(new PhongMaterial(Color.ORANGE));
 	}
 
