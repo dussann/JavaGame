@@ -30,13 +30,13 @@ import view.ViewManager;
 
 public class Game extends Application {
 
-	// float i = 0.1f;
-	// Box prepreka, fox, traka;
-
 	public ViewManager manager;
 	public GameManager gameManager;
 	double timeStart = Double.NaN;
-	Point3D[] startAndPoints = new Point3D[] { new Point3D(-5, 0, 0), new Point3D(5, 0, 0) };
+	Point3D[] startAndPoints = new Point3D[] {
+			new Point3D(-10, 0, 0),
+			new Point3D(10, 0, 0)
+			};
 
 	AnimationTimer timer = new AnimationTimer() {
 
@@ -45,16 +45,16 @@ public class Game extends Application {
 
 			double timeNow = now/1e9;
 
-			if (Double.isNaN(timeStart)) {   // Ako smo prvi put ovde, postavljamo početno vreme.
+			if (Double.isNaN(timeStart)) {
 				timeStart = timeNow;
 			}
 
-			double time = timeNow - timeStart;     // Vreme proteklo od starta programa.
-			double tCycle = time % 3;              // Vreme proteklo od početka ciklusa (svaki deo ciklusa traje 1s).
-			int i = (int) tCycle;                  // Faza ciklusa u kome smo trenutno.
-			double t = tCycle % 1;                 // Gde smo unutar trenutne faze, vrednost iz [0, 1).
-			Point3D s = startAndPoints[0];                    // PoÄ�etna taÄ�ka trenutne faze.
-			Point3D d = startAndPoints[1]; // Krajnja taÄ�ka trenutne faze.
+			double time = timeNow - timeStart;
+			double tCycle = time % 3;
+			int i = (int) tCycle;
+			double t = tCycle % 1;
+			Point3D s = startAndPoints[0];
+			Point3D d = startAndPoints[1];
 
 			Point3D p = s.multiply(1 - t).add(d.multiply(t));
 
@@ -63,24 +63,18 @@ public class Game extends Application {
 			double xDiff = Math.abs(manager.getFox().getXPosition()  - p.getX());
 			double yDiff = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
 
-			double zbirPolusirina = 1.05d;
-			System.out.println(manager.getFox().getZPosition());
+
 			if(gameManager.collision(xDiff, yDiff)){
-				System.out.println("live");
 			}else{
-				System.out.println("die");
 				manager.getFox().setZPosition(-5);
+				if(!gameManager.loseLife()){
+					manager.setText2();
+					timer.stop();
+				}
 			}
 			gameManager.checkFinishGame();
 		}
 	};
-
-
-	public void setCamera(ViewManager manager) {
-		PerspectiveCamera camera = new PerspectiveCamera(true);
-		manager.getScene().setCamera(camera);
-		new CameraController(manager.getScene(), camera, new Point3D(20, -15, -10), new Point3D(-10, 10, 10));
-	}
 
 	public Stage initGame(Stage primaryStage) {
 		this.manager = new ViewManager();
@@ -88,7 +82,7 @@ public class Game extends Application {
 		this.manager.addFox();
 		this.manager.addPath();
 		this.manager.addCar();
-		this.setCamera(manager);
+		this.manager.setText();
 		primaryStage = manager.getStage();
 
 		Scene scene = this.manager.getScene();

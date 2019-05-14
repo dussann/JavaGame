@@ -1,13 +1,22 @@
 package view;
 
 import javafx.collections.ObservableList;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Shape3D;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Transform;
 import javafx.stage.Stage;
+import mars.javafx.CameraController;
 import models.Car;
 import models.Fox;
 import models.Road;
@@ -18,20 +27,63 @@ public class ViewManager {
 	private static final int HEIGHT = 600;
 	private Stage mainStage;
 	private Scene mainScene;
+
 	private Group root;
+	private Group rezGroup;
 	private Fox fox;
 	private Road road;
 	private Car car;
+	PerspectiveCamera camera;
+
+	Text life, loseMsg;
 
 	public ViewManager() {
+		this.camera = new PerspectiveCamera(true);
 		this.root = new Group();
-		this.mainScene = new Scene(this.root, WIDTH, HEIGHT, true);
+
+		this.rezGroup = new Group();
+
+		SubScene game = new SubScene(root, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+		game.setCamera(camera);
+		SubScene rezultat = new SubScene(rezGroup, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
+
+		this.mainScene = new Scene(new Group(game, rezultat));
+
+		// this.mainScene = new Scene(this.root, WIDTH, HEIGHT, true);
 		this.mainStage = new Stage();
 		this.mainStage.setScene(this.mainScene);
+		new CameraController(mainScene, camera, new Point3D(20, -15, -10), new Point3D(-10, 10, 10));
 	}
 
-	public  ObservableList<Transform> getTransforms() {
+	public ObservableList<Transform> getTransforms() {
 		return car.getTransforms();
+	}
+
+	public Text getText1() {
+		return this.life;
+	}
+
+	public void setText1(int value) {
+		this.life.setText(new Integer(value).toString());
+	}
+
+	public Text getText2() {
+		return this.life;
+	}
+
+	public void setText2() {
+		this.life.setText("You loose");
+	}
+
+
+	public void setText() {
+		Font font = new Font(20);
+		this.life = new Text(10, 25, "");
+		this.loseMsg = new Text(10, 75, "");
+		life.setText(new Integer(3).toString());
+		life.setFill(Color.RED);
+		life.setFont(font);
+		rezGroup.getChildren().add(life);
 	}
 
 	public Stage getStage() {
@@ -69,7 +121,7 @@ public class ViewManager {
 		return this.car;
 	}
 
-	public void addElement(Shape3D element){
+	public void addElement(Shape3D element) {
 		this.root.getChildren().add(element);
 	}
 

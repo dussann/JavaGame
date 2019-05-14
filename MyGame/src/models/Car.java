@@ -30,9 +30,7 @@ public class Car {
 	}
 
 	public double getXPosition() {
-		// return this.car.getLayoutX();
 		return  car.getTranslateX();
-		//return this.car.getTranslateX();
 	}
 
 	public void setXPosition(double position) {

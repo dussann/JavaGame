@@ -9,11 +9,26 @@ public class GameManager {
 
 	int i = 0;
 	int y = 0;
-	double zbirPolusirina = 1.05d;
+	public final double zbirPolusirina = 1.05d;
+	private int life = 3;
+
 	private ViewManager manager;
 
 	public GameManager(ViewManager manager) {
 		this.manager = manager;
+	}
+
+	public int getLife(){
+		return life;
+	}
+
+	public boolean loseLife(){
+		this.life--;
+		if(life == 0){
+			return false;
+		}
+		manager.setText1(life);
+		return true;
 	}
 
 	public boolean collision(double xDiff, double yDiff){
@@ -27,7 +42,6 @@ public class GameManager {
 
 	public void checkFinishGame() {
 		if (manager.getFox().getZPosition() > 3) {
-			System.out.println("presao nivo");
 			this.manager.exitStage();
 		}
 	}
