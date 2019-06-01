@@ -32,7 +32,7 @@ public class ViewManager {
 	private Group rezGroup;
 	private Fox fox;
 	private Road road;
-	private Car car;
+	private Car car, car1;
 	PerspectiveCamera camera;
 
 	Text life, loseMsg;
@@ -49,7 +49,7 @@ public class ViewManager {
 
 		this.mainScene = new Scene(new Group(game, rezultat));
 
-		// this.mainScene = new Scene(this.root, WIDTH, HEIGHT, true);
+
 		this.mainStage = new Stage();
 		this.mainStage.setScene(this.mainScene);
 		new CameraController(mainScene, camera, new Point3D(20, -15, -10), new Point3D(-10, 10, 10));
@@ -117,9 +117,20 @@ public class ViewManager {
 		this.root.getChildren().add(car.getCar());
 	}
 
+	public void addCar1() {
+		this.car1 = new Car();
+		this.root.getChildren().add(car1.getCar());
+	}
+
+
 	public Car getCar() {
 		return this.car;
 	}
+
+	public Car getCar1() {
+		return this.car1;
+	}
+
 
 	public void addElement(Shape3D element) {
 		this.root.getChildren().add(element);

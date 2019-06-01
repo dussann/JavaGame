@@ -40,9 +40,12 @@ public class GameManager {
 		return true;
 	}
 
-	public void checkFinishGame() {
+	public void checkFinishStage() {
 		if (manager.getFox().getZPosition() > 3) {
-			this.manager.exitStage();
+			manager.getFox().setZPosition(-5);
+			manager.getCar().setZPosition(2);
+			manager.addCar1();
+			manager.getCar1().setZPosition(-2);
 		}
 	}
 }

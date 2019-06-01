@@ -53,8 +53,8 @@ public class Game extends Application {
 			double tCycle = time % 3;
 			int i = (int) tCycle;
 			double t = tCycle % 1;
-			Point3D s = startAndPoints[0];
-			Point3D d = startAndPoints[1];
+			Point3D s = startAndPoints[1];
+			Point3D d = startAndPoints[0];
 
 			Point3D p = s.multiply(1 - t).add(d.multiply(t));
 
@@ -64,6 +64,16 @@ public class Game extends Application {
 			double yDiff = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
 
 
+			if(manager.getCar1()!= null){
+				Point3D s1 = startAndPoints[0];
+				Point3D d1 = startAndPoints[1];
+
+				Point3D p1 = s.multiply(1 - t).add(d.multiply(t));
+
+				manager.getCar1().getTransforms().setAll(new Translate(p.getX(), p.getY(), p.getZ()));
+				double xDiff1 = Math.abs(manager.getFox().getXPosition()  - p.getX());
+				double yDiff1 = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
+			}
 			if(gameManager.collision(xDiff, yDiff)){
 			}else{
 				manager.getFox().setZPosition(-5);
@@ -72,7 +82,7 @@ public class Game extends Application {
 					timer.stop();
 				}
 			}
-			gameManager.checkFinishGame();
+			gameManager.checkFinishStage();
 		}
 	};
 
