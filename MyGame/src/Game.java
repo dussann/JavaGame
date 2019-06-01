@@ -68,9 +68,9 @@ public class Game extends Application {
 				Point3D s1 = startAndPoints[0];
 				Point3D d1 = startAndPoints[1];
 
-				Point3D p1 = s.multiply(1 - t).add(d.multiply(t));
+				Point3D p1 = s1.multiply(1 - t).add(d1.multiply(t));
 
-				manager.getCar1().getTransforms().setAll(new Translate(p.getX(), p.getY(), p.getZ()));
+				manager.getCar1().getTransforms().setAll(new Translate(p1.getX(), p1.getY(), p1.getZ()));
 				double xDiff1 = Math.abs(manager.getFox().getXPosition()  - p.getX());
 				double yDiff1 = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
 			}
