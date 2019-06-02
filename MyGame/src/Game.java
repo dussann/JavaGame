@@ -73,7 +73,7 @@ public class Game extends Application {
 				if (gameManager.collision(xDiff1, yDiff1)) {
 					manager.getFox().setZPosition(-5);
 					if (!gameManager.loseLife()) {
-						manager.setText2();
+						manager.setLooseMsg();
 						timer.stop();
 					}
 				}
@@ -81,7 +81,7 @@ public class Game extends Application {
 			if (gameManager.collision(xDiff, yDiff)) {
 				manager.getFox().setZPosition(-5);
 				if (!gameManager.loseLife()) {
-					manager.setText2();
+					manager.setLooseMsg();
 					timer.stop();
 				}
 			}

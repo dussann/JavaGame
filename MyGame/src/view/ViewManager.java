@@ -35,7 +35,7 @@ public class ViewManager {
 	private Car car, car1;
 	private PerspectiveCamera camera;
 
-	private Text life, loseMsg, winMsg;
+	private Text life, lifeText, looseMsg, winMsg;
 
 	public ViewManager() {
 		this.camera = new PerspectiveCamera(true);
@@ -48,7 +48,6 @@ public class ViewManager {
 		SubScene rezultat = new SubScene(rezGroup, WIDTH, HEIGHT, true, SceneAntialiasing.BALANCED);
 
 		this.mainScene = new Scene(new Group(game, rezultat));
-
 
 		this.mainStage = new Stage();
 		this.mainStage.setScene(this.mainScene);
@@ -63,30 +62,45 @@ public class ViewManager {
 		return this.life;
 	}
 
-	public void setText1(int value) {
+	public void setLife(int value) {
 		this.life.setText(new Integer(value).toString());
 	}
 
-	public Text getText2() {
+	public Text getLife() {
 		return this.life;
 	}
 
-	public void setText2() {
-		this.life.setText("You loose");
+	public void setLooseMsg() {
+		this.looseMsg.setText("You loose");
 	}
 
 	public void setWinMsg() {
-		this.life.setText("You win!!!");
+		this.winMsg.setText("You win!!!");
 	}
 
 	public void setText() {
 		Font font = new Font(20);
-		this.life = new Text(10, 25, "");
-		this.loseMsg = new Text(10, 75, "");
+		life = new Text(55, 25, "");
 		life.setText(new Integer(3).toString());
-		life.setFill(Color.RED);
+		life.setFill(Color.BLACK);
 		life.setFont(font);
+
+		lifeText = new Text(10, 25, "Life: ");
+		lifeText.setFill(Color.BLACK);
+		lifeText.setFont(font);
+
+		looseMsg = new Text(10, 55, "");
+		looseMsg.setFill(Color.RED);
+		looseMsg.setFont(font);
+
+		winMsg = new Text(10, 55, "");
+		winMsg.setFill(Color.BLUE);
+		winMsg.setFont(font);
+
 		rezGroup.getChildren().add(life);
+		rezGroup.getChildren().add(looseMsg);
+		rezGroup.getChildren().add(lifeText);
+		rezGroup.getChildren().add(winMsg);
 	}
 
 	public Stage getStage() {

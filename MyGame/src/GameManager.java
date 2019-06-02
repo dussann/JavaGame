@@ -7,13 +7,10 @@ import view.ViewManager;
 
 public class GameManager {
 
-	int i = 0;
-	int y = 0;
+	private static final double halfSumWidth = 1.05d;
 	private static final int levels = 2;
 	private int currentLevel;
-	public final double halfSumWidth = 1.05d;
 	private int life = 3;
-
 	private ViewManager manager;
 
 	public GameManager(ViewManager manager) {
@@ -27,10 +24,10 @@ public class GameManager {
 
 	public boolean loseLife(){
 		this.life--;
+		manager.setLife(life);
 		if(life == 0){
 			return false;
 		}
-		manager.setText1(life);
 		return true;
 	}
 
