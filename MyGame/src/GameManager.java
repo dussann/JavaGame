@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
