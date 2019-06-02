@@ -11,17 +11,13 @@ public class Fox {
 
 	public Fox() {
 		this.fox = new Box(1, 1, 1);
-		this.fox.setTranslateY(-2);
+		this.fox.setTranslateY(-1);
 		this.fox.setTranslateZ(-5);
 		fox.setMaterial(new PhongMaterial(Color.ORANGE));
 	}
 
 	public Box getFox() {
 		return this.fox;
-	}
-
-	public double x() {
-		return fox.getLayoutBounds().getMinX();
 	}
 
 	public double getXPosition() {
@@ -47,27 +43,4 @@ public class Fox {
 	public void setZPosition(double position) {
 		this.fox.setTranslateZ(position);
 	}
-
-	/* Calculate x-area of fox */
-
-	public double getLeftSideArea() {
-
-		return this.getXPosition() + fox.getLayoutBounds().getMinX();
-	}
-
-	public double getRightSideArea() {
-		return this.getXPosition() +fox.getLayoutBounds().getMaxX();
-	}
-
-	/* Calculate z-area of fox */
-
-	public double getFrontSideArea() {
-		return this.getZPosition() + 5;
-	}
-
-	public double getBackSideArea() {
-		return this.getZPosition() - 5;
-	}
-
-
 }

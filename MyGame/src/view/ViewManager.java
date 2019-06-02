@@ -33,9 +33,9 @@ public class ViewManager {
 	private Fox fox;
 	private Road road;
 	private Car car, car1;
-	PerspectiveCamera camera;
+	private PerspectiveCamera camera;
 
-	Text life, loseMsg;
+	private Text life, loseMsg, winMsg;
 
 	public ViewManager() {
 		this.camera = new PerspectiveCamera(true);
@@ -75,6 +75,9 @@ public class ViewManager {
 		this.life.setText("You loose");
 	}
 
+	public void setWinMsg() {
+		this.life.setText("You win!!!");
+	}
 
 	public void setText() {
 		Font font = new Font(20);
@@ -121,7 +124,6 @@ public class ViewManager {
 		this.car1 = new Car();
 		this.root.getChildren().add(car1.getCar());
 	}
-
 
 	public Car getCar() {
 		return this.car;

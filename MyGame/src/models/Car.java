@@ -16,10 +16,8 @@ public class Car {
 	public Car(){
 		this.car = new Box(2, 2, 2);
 		this.car.setTranslateY(-2);
-		//this.car.setTranslateX(-10);
 		car.setMaterial(new PhongMaterial(Color.RED));
 	}
-
 
 	public ObservableList<Transform> getTransforms() {
 		return this.car.getTransforms();
@@ -51,29 +49,5 @@ public class Car {
 
 	public void setZPosition(double position) {
 		this.car.setTranslateZ(position);
-	}
-
-	public DoubleProperty getLayuoutX(){
-		return this.car.layoutXProperty();
-	}
-
-	/* calculate x-area of car */
-
-	public double getLeftSideArea(){
-		return this.getXPosition() + this.car.getLayoutBounds().getMinX();
-	}
-
-	public double getRightSideArea(){
-		return this.getXPosition() + this.car.getLayoutBounds().getMaxX();
-	}
-
-	/* calculate z-area of car */
-
-	public double getFrontSideArea() {
-		return this.getZPosition() + this.car.getLayoutBounds().getMaxZ();
-	}
-
-	public double getBackSideArea() {
-		return this.getZPosition() + this.car.getLayoutBounds().getMinZ();
 	}
 }

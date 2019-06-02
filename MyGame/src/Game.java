@@ -33,17 +33,14 @@ public class Game extends Application {
 	public ViewManager manager;
 	public GameManager gameManager;
 	double timeStart = Double.NaN;
-	Point3D[] startAndPoints = new Point3D[] {
-			new Point3D(-10, 0, 0),
-			new Point3D(10, 0, 0)
-			};
+	Point3D[] startAndPoints = new Point3D[] { new Point3D(-10, 0, 0), new Point3D(10, 0, 0) };
 
 	AnimationTimer timer = new AnimationTimer() {
 
 		@Override
 		public void handle(long now) {
 
-			double timeNow = now/1e9;
+			double timeNow = now / 1e9;
 
 			if (Double.isNaN(timeStart)) {
 				timeStart = timeNow;
@@ -53,36 +50,45 @@ public class Game extends Application {
 			double tCycle = time % 3;
 			int i = (int) tCycle;
 			double t = tCycle % 1;
-			Point3D s = startAndPoints[1];
-			Point3D d = startAndPoints[0];
+			Point3D s = startAndPoints[0];
+			Point3D d = startAndPoints[1];
 
 			Point3D p = s.multiply(1 - t).add(d.multiply(t));
 
 			manager.getCar().getTransforms().setAll(new Translate(p.getX(), p.getY(), p.getZ()));
 
-			double xDiff = Math.abs(manager.getFox().getXPosition()  - p.getX());
-			double yDiff = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
+			double xDiff = Math.abs(manager.getFox().getXPosition() - p.getX());
+			double yDiff = Math.abs(manager.getFox().getZPosition() - manager.getCar().getZPosition());
 
-
-			if(manager.getCar1()!= null){
-				Point3D s1 = startAndPoints[0];
-				Point3D d1 = startAndPoints[1];
+			if (manager.getCar1() != null) {
+				Point3D s1 = startAndPoints[1];
+				Point3D d1 = startAndPoints[0];
 
 				Point3D p1 = s1.multiply(1 - t).add(d1.multiply(t));
 
 				manager.getCar1().getTransforms().setAll(new Translate(p1.getX(), p1.getY(), p1.getZ()));
-				double xDiff1 = Math.abs(manager.getFox().getXPosition()  - p.getX());
-				double yDiff1 = Math.abs(manager.getFox().getZPosition()  - manager.getCar().getXPosition());
+				double xDiff1 = Math.abs(manager.getFox().getXPosition() - p1.getX());
+				double yDiff1 = Math.abs(manager.getFox().getZPosition() - manager.getCar1().getZPosition());
+
+				if (gameManager.collision(xDiff1, yDiff1)) {
+					manager.getFox().setZPosition(-5);
+					if (!gameManager.loseLife()) {
+						manager.setText2();
+						timer.stop();
+					}
+				}
 			}
-			if(gameManager.collision(xDiff, yDiff)){
-			}else{
+			if (gameManager.collision(xDiff, yDiff)) {
 				manager.getFox().setZPosition(-5);
-				if(!gameManager.loseLife()){
+				if (!gameManager.loseLife()) {
 					manager.setText2();
 					timer.stop();
 				}
 			}
-			gameManager.checkFinishStage();
+			if(gameManager.checkFinishStage()){
+				manager.setWinMsg();
+				timer.stop();
+			}
 		}
 	};
 
